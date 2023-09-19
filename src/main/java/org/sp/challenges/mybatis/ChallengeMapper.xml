@@ -2,4 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Challenge">
 
+	<!-- mybatis에서 join수행 시, resultType에 오직 하나의 자료형밖에는 올수가 없기에
+	DTO객체 2개를 동시에 넣어주는 매핑은 없음. => 개발자가 직접 명시해줘야함 -->
+
+	<!-- 수동 매핑 -->
+	<resultMap type="Challenge" id="challengeMap">
+		<id column="challenge_idx" property="challenge_idx" />
+		<result column="title" property="title" />
+		<result column="writer" property="writer" />
+		<result column="regdate" property="regdate" />
+		<result column="period" property="period" />
+		<result column="joins" property="joins" />
+		<result column="hit" property="hit" />
+		<result column="content" property="content" />
+		<result column="filename" property="filename" />
+		
+		<association column="member_idx" property="member" javaType="Member" select="Member.select" />
+	</resultMap>
+
+	<!-- 멤버pk(fk)를 이용한 챌린지 1건 등록 -->
+	<insert id="insert" parameterType="Challenge">
+		insert into challenge(challenge_idx, member_idx, title, writer, period, content, filename)
+		values(seq_challenge.nextval, #{member.member_idx}, #{title}, #{writer}, #{period}, #{content}, #{filename})
+	</insert>
+	
+	<!-- 목록 가져오기 -->
+	<select id="selectAll" resultMap="challengeMap">
+		select * from challenge order by challenge_idx desc
+	</select>
+
 </mapper>

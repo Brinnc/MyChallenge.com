@@ -3,6 +3,8 @@ package org.sp.challenges.model;
 import java.util.List;
 
 import org.sp.challenges.domain.Challenge;
+import org.sp.challenges.domain.Member;
+import org.sp.challenges.exception.ChallengeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,8 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public void insert(Challenge challenge) {
-		// TODO Auto-generated method stub
+	public void insert(Challenge challenge, Member member) throws ChallengeException{
+		challengeDAO.insert(challenge, member);
 		
 	}
 

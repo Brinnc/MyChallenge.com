@@ -4,13 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="org.sp.challenges.domain.Challenge"
-			alias="Challenge" />
+		<typeAlias type="org.sp.challenges.domain.Challenge" alias="Challenge" />
+		<typeAlias type="org.sp.challenges.domain.Member" alias="Member" />
 	</typeAliases>
 
 	<mappers>
-		<mapper
-			resource="org/sp/challenges/mybatis/ChallengeMapper.xml" />
+		<mapper resource="org/sp/challenges/mybatis/ChallengeMapper.xml" />
+		<mapper resource="org/sp/challenges/mybatis/MemberMapper.xml" />
 	</mappers>
 
 </configuration>

@@ -1,12 +1,23 @@
 package org.sp.challenges.controller;
 
+import javax.jws.WebParam.Mode;
+import javax.servlet.http.HttpServletRequest;
+
+import org.sp.challenges.domain.Challenge;
+import org.sp.challenges.exception.ChallengeException;
+import org.sp.challenges.model.ChallengeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ChallengeController {
+	
+	@Autowired
+	private ChallengeService challengeService;
 
 	//메인 페이지 요청
 	@GetMapping("/challenges/main")
@@ -27,13 +38,24 @@ public class ChallengeController {
 	
 	//챌린지 등록
 	@PostMapping("/challenges/regist")
-	public ModelAndView regist() {
-		//3단계)
+	public ModelAndView regist(Challenge challenge, HttpServletRequest request) {
+		//3단계) DB에 넣기(오라클)
+		challengeService.insert(challenge);
+		//request.getAttribute("member", member.getMember_idx());
 		
 		//4단계) 저장X, redirect
 		ModelAndView mav=new ModelAndView("redirect:/challenges/main");
 		
 		return mav;
 	}
+	
+	//@ExceptionHandler(ChallengeException.class)
+	//public ModelAndView handle(ChallengeException e) {
+		//발생한 예외객체를 jsp에서 볼 수 있도록 결과 저장
+		//ModelAndView mav=new ModelAndView("error/result"); 
+		//mav.addObject("e", e);
+		
+		//return mav;
+	//}
 	
 }

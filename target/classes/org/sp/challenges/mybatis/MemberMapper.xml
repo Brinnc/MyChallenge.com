@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+
+	<!-- 레코드 1건 등록 == 회원 가입(회원) -->
+	<insert id="signup" parameterType="Member">
+		insert into member(member_idx, id, pass, name, email)
+		values(seq_member.nextval, #{id}, #{pass}, #{name}, #{email})
+		
+		<selectKey keyColumn="member_idx" keyProperty="member_idx"
+			resultType="int" order="AFTER">
+			select seq_member.currval as member_idx from dual
+		</selectKey>
+	</insert>
+
+	<!-- 회원의 모든 정보 가져오기 -->
+	<select id="selectAll" resultType="Member">
+		select * from member
+	</select>
+	
+	<!-- 회원번호(member_idx)로 회원 가져오기 -->
+	<select id="select" resultType="Member" parameterType="int">
+		select * from member
+		where member_idx=#{member_idx}
+	</select>
+
+	
+	<!-- 자식 테이블에 넘겨주기 위한 수동매핑 
+	<resultMap type="Member" id="memberMap">
+		<id column="member_idx" property="member_idx" />
+		<result column="id" property="id" />
+		<result column="pass" property="pass" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+		
+		<collection column="member_idx" property="challenge" javaType="Challenge" select="Challenge.insert" />
+	</resultMap> -->
+
+	<!-- 로그인 체크 -->
+	<select id="login" parameterType="Member" resultType="Member">
+		select * from member
+		where id=#{id} and pass=#{pass}
+	</select>
+	
+	
+	<!-- 회원 가입(어드민) 
+	<insert id="addAdmin" parameterType="Admin">
+		insert into admin(admin_idx, id, pass, name)
+		values(seq_admin.nextval, #{id}, #{pass}, #{name})
+	</insert> -->
+	
+	<!-- 회원 ID 찾기 -->
+	<select id="findID" parameterType="Member" resultType="Member">
+		select id from member
+		where name=#{name} and email=#{email}
+	</select>
+
+</mapper>

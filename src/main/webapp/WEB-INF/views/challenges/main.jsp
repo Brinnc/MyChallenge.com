@@ -1,4 +1,8 @@
+<%@page import="org.sp.challenges.domain.Member"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<% 
+	Member member=(Member)session.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +44,10 @@ $(function(){
 	<img src="/static/mediumish-html/assets/img/logo.png" alt="logo">
 	</a>
 	<!-- End Logo -->
+	
+	<!-- Member DTO -->
+	<a>HEELO, <%=member.getName() %> !</a>
+	
 	<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 		<!-- Begin Menu -->
 		<ul class="navbar-nav ml-auto">

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class Challenge {
 	private int challenge_idx;
+	private Member member;
 	private String title;
 	private String writer;
 	private String regdate;

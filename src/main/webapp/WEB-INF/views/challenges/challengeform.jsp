@@ -1,6 +1,9 @@
+<%@page import="org.sp.challenges.domain.Member"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<% 
+	Member member=(Member)session.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,7 +97,7 @@ input[type=text]{
 		$("form").attr({
 			action: "/challenges/regist",
 			method: "post",
-			enctype: "multipart/form-data"
+			//enctype: "multipart/form-data"
 		});
 		$("form").submit();
 	}
@@ -142,7 +145,7 @@ input[type=text]{
 
 			<h2 class="text-center" id="header"> Make a Challenge </h2>
 
-			<form name="form" id="form" role="form" method="post" action="${pageContext.request.contextPath}/board/saveBoard">
+			<form name="form" id="form" role="form" method="post">
 
 				<div class="mb-3">
 					<label for="title">🚩title.</label>
@@ -151,7 +154,7 @@ input[type=text]{
 
 				<div class="mb-3">
 					<label for="writer">✏️writer.</label>
-					<input type="text" class="form-control" name="writer" id="writer" placeholder="만든이">
+					<input type="text" class="form-control" name="writer" id="writer" value="<%=member.getName()%>" readonly>
 				</div>
 				
 				<div class="mb-3">
@@ -166,7 +169,7 @@ input[type=text]{
 
 				<div class="mb-3">
 					<label for="file">📸image.</label>
-					<input type="file" class="form-control" name="photo" id="photo">
+					<input type="file" class="form-control" name="filename" id="photo">
 					<br>
 				</div>
 
