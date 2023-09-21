@@ -1,14 +1,12 @@
 package org.sp.challenges.controller;
 
-import javax.jws.WebParam.Mode;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.sp.challenges.domain.Challenge;
-import org.sp.challenges.exception.ChallengeException;
+import org.sp.challenges.domain.Member;
 import org.sp.challenges.model.ChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,9 +36,13 @@ public class ChallengeController {
 	
 	//챌린지 등록
 	@PostMapping("/challenges/regist")
-	public ModelAndView regist(Challenge challenge, HttpServletRequest request) {
+	public ModelAndView regist(Challenge challenge, HttpSession session) {
 		//3단계) DB에 넣기(오라클)
-		challengeService.insert(challenge);
+		Member member=(Member)session.getAttribute("member");
+		System.out.println("해당 글에서의 member_idx는 "+member.getMember_idx());
+		challenge.setMember(member); //★★★★★
+		
+		challengeService.insert(challenge, member);
 		//request.getAttribute("member", member.getMember_idx());
 		
 		//4단계) 저장X, redirect

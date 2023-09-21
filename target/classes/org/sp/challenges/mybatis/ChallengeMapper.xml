@@ -17,7 +17,7 @@
 		<result column="content" property="content" />
 		<result column="filename" property="filename" />
 		
-		<association column="member_idx" property="member" javaType="Member" select="Member.select" />
+		<association column="member_idx" property="member" javaType="Member" jdbcType="INTEGER" select="Member.select" />
 	</resultMap>
 
 	<!-- 멤버pk(fk)를 이용한 챌린지 1건 등록 -->
