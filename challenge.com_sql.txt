@@ -1,0 +1,51 @@
+<challenge.com_sql>
+
+--회원 테이블DB 생성
+create table member(
+ member_idx number primary key
+ , id varchar2(30)
+ , pass varchar2(64)
+ , name varchar2(30)
+ , email varchar2(64)
+);
+
+create sequence seq_member
+increment by 1
+start with 1;
+
+--챌린지 테이블DB 생성
+create table challenge(
+	challenge_idx number primary key
+	, member_idx number
+	, title varchar2(100)
+	, writer varchar2(30)
+	, regdate DATE default sysdate
+	, period varchar2(20)
+	, joins number default 0
+	, hit number default 0
+	, filename varchar2(30)
+	, content clob
+	, constraint fk_member_challenge foreign key(member_idx)
+	  references member(member_idx)
+);
+
+//alter table challenge add filename varchar2(30);
+
+create sequence seq_challenge
+increment by 1
+start with 1;
+
+--코멘트 테이블DB 생성
+create table comments(
+	comments_idx number primary key
+	, challenge_idx number
+	, msg varchar2(300) 
+	, cwriter varchar2(30)
+	, cregdate DATE default sysdate
+	, constraint fk_challenge_comments foreign key(challenge_idx)
+	  references challenge(challenge_idx)
+);
+
+create sequence seq_comments
+increment by 1
+start with 1;
