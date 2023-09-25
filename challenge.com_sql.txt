@@ -1,4 +1,4 @@
-<challenge.com_sql>
+< challenge.com_sql >
 
 --회원 테이블DB 생성
 create table member(
